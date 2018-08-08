@@ -9,15 +9,6 @@ MAINTAINER The CentOS Project <cloud-ops@centos.org>
 
 RUN yum -y update; yum clean all
 RUN yum -y install openssh-server passwd; yum clean all
-ADD ./start.sh /start.sh
-RUN mkdir /var/run/sshd
-
-RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' 
-
-RUN chmod 755 /start.sh
-# EXPOSE 22
-RUN ./start.sh
-ENTRYPOINT ["/usr/sbin/sshd", "-D"]
 
 RUN yum -y install python27-devel python27-pip gcc libjpeg-devel zlib-devel gcc-c++
 RUN yum -y install wget
@@ -55,6 +46,8 @@ RUN echo "$PWD"
 WORKDIR "/lambda/src"
 RUN yum install -y python-setuptools
 RUN easy_install pip
+RUN pip install awscli --upgrade --user
+ENV PATH=~/.local/bin:$PATH
 RUN pip install -U virtualenv
 RUN python -m virtualenv venv
 RUN virtualenv env
