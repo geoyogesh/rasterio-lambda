@@ -8,7 +8,6 @@ FROM centos:centos7
 MAINTAINER The CentOS Project <cloud-ops@centos.org>
 
 RUN yum -y update; yum clean all
-RUN yum -y install openssh-server passwd; yum clean all
 
 RUN yum -y install python27-devel python27-pip gcc libjpeg-devel zlib-devel gcc-c++
 RUN yum -y install wget
